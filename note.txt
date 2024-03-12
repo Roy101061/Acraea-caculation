@@ -1,0 +1,6 @@
+    fstream
+https://hackmd.io/@ndhu-programming-2021/BkZukG4jK
+    vector
+https://shengyu7697.github.io/std-vector/
+    struct
+https://shengyu7697.github.io/cpp-struct/

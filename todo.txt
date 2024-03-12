@@ -1,2 +1,17 @@
 file input/output
 file type
+struct for rec?
+
+caculation regulations: https://arcwiki.mcd.blue/index.php?title=%E6%BD%9C%E5%8A%9B%E5%80%BC&variant=zh-tw&mobileaction=toggle_view_desktop
+    score>=10,000,000(PM) 
+        song ppt+2
+    9,800,000 ~ 10,000,000
+        song ppt+1+[(score-9,800,000)/200,000]
+    0 ~ 9,800,000
+        song ppt+[(score-9,500,000)/300,000]
+    
+    B30 -> 75%
+    R10 -> 25%
+
+    R10: base on R30
+        10 top rec in recent 30 rec avg
