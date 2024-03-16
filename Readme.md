@@ -1,3 +1,5 @@
+***still WIP***
+
 Arcaea Potential Calculator
 
 Features:
