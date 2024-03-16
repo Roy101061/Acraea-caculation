@@ -34,12 +34,16 @@ int main(){
     deque<string [2]> R30Song;
     deque<float [6]> R30Rec;
     while(!in.eof()){
-        string nametemp;
-        int numtemp;
-        for(int n=0; n<2; n++){
-            in>>nametemp;
-            R30Song.push_back(nametemp);
-        }
+        string nametemp[2];
+        float numtemp[6];
+
+        for(int n=0; n<2; n++)
+            in>>nametemp[n];
+        R30Song.push_back(nametemp);
+
+        for(int n=0; n<6; n++)
+            in>>numtemp[n];
+        R30Rec.push_back(numtemp);
     }
 
 
