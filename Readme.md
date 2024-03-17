@@ -7,4 +7,4 @@ Features:
 How to use:
 
 R30/B30: 
-    song,difficulty,score,potential,MPureCount,PureCount,FarCount,LostCount
+    song,level,score,potential,MPureCount,PureCount,FarCount,LostCount
