@@ -17,6 +17,9 @@ int main(){
     float DB[500][LevelCount];
     int i=1;  //start from 2(1) due to spreadsheet 
     int B30info[LevelCount];
+    string song,level;
+    int userdata[5];
+
 
     //song DB
     in.open("Arcaea Potential Cal.csv");
@@ -73,6 +76,12 @@ int main(){
     readfail();
     for(int i=1; i<LevelCount; i++)
         in>>B30info[i];
+
+    //UI
+    cout<<"Enter your score:"<<endl<<"(song,level,score,MaxPureCount,PureCount,FarCount,LostCount)";
+    cin>>song>>level;
+    for(int i=0; i<5; i++)
+        cin>>userdata[i];
 
 
     return 0;
