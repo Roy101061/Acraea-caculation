@@ -8,3 +8,7 @@ class
     https://hackmd.io/@Mes/MinerT_Class
 deque
     https://shengyu7697.github.io/std-deque/
+map
+    https://shengyu7697.github.io/std-map/
+pair
+    https://shengyu7697.github.io/std-pair/
