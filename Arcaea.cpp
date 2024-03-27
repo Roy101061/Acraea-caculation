@@ -1,12 +1,13 @@
 #include <bits/stdc++.h>
 #define LevelCount 6 //5+1 for blank
+
+using namespace std;
+
 ifstream in;
 ofstream out;
 string LevelNames[LevelCount], SongList[500];
 float DB[500][LevelCount];
 int B30info[LevelCount];
-
-using namespace std;
 
 void readfail(){
     if(in.fail()){
