@@ -2,6 +2,9 @@
 #define LevelCount 6 //5+1 for blank
 ifstream in;
 ofstream out;
+string LevelNames[LevelCount], SongList[500];
+float DB[500][LevelCount];
+int B30info[LevelCount];
 
 using namespace std;
 
@@ -12,15 +15,9 @@ void readfail(){
     }
 }
 
-int main(){
-    string LevelNames[LevelCount], SongList[500];
-    float DB[500][LevelCount];
-    int i=1;  //start from 2(1) due to spreadsheet 
-    int B30info[LevelCount];
-    string song,level;
-    int userdata[5];
-
-
+void setupDB(){
+    int i=1;  //start from 2(1) due to spreadsheet
+    
     //song DB
     in.open("Arcaea Potential Cal.csv");
     readfail();
@@ -77,12 +74,19 @@ int main(){
     for(int i=1; i<LevelCount; i++)
         in>>B30info[i];
 
+}
+
+int main(){
+    setupDB();
+    string song,level;
+    int userdata[5];
+
     //UI
     cout<<"Enter your score:"<<endl<<"(song,level,score,MaxPureCount,PureCount,FarCount,LostCount)";
     cin>>song>>level;
     for(int i=0; i<5; i++)
         cin>>userdata[i];
-
+    
 
     return 0;
 }
