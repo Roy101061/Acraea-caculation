@@ -6,7 +6,7 @@ using namespace std;
 
 ifstream in;
 ofstream out;
-string LevelNames[LevelCount], SongList[500];
+string LevelNames[LevelCount], SongList[500], DBtemp;
 float DB[500][LevelCount];
 int B30info[LevelCount];
 
@@ -18,21 +18,22 @@ void readfail(int n){
 }
 
 void setupDB(){
-    int i=1;  //start from 2(1) due to spreadsheet
     
     //song DB
-    in.open("Arcaea Potential Cal.csv");
+    in.open("DB.csv");
     readfail(1);
     for(int i=0; i<LevelCount; i++){
-        in>>LevelNames[i];
+        getline(in, LevelNames[i], ',');
     }
+
+    int i=1;  //start from 2(1) due to spreadsheet
     while(!in.eof()){
         i++;
-        in>>SongList[i];
+        getline(in, SongList[i], ',');
         for(int n=1; n<LevelCount; n++){
-            in>>DB[i][n];
+            getline(in, DBtemp, ',');
+            DB[i][n]=stof(DBtemp);
         }
-        cout<<i<<endl;
     }
 	in.close();
 
@@ -81,7 +82,7 @@ void setupDB(){
         in>>B30info[i];
     in.close();
 
-    cout<<"DB read success!";
+    cout<<endl<<"DB read success!"<<endl;
 }
 
 int main(){
@@ -90,7 +91,7 @@ int main(){
     int userdata[5];
 
     //UI
-    cout<<"Enter your score:"<<endl<<"(song,level,score,MaxPureCount,PureCount,FarCount,LostCount)";
+    cout<<"Enter your score:"<<endl<<"(song,level,score,MaxPureCount,PureCount,FarCount,LostCount)"<<endl;
     cin>>song>>level;
     for(int i=0; i<5; i++)
         cin>>userdata[i];
