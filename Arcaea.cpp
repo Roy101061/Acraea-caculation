@@ -99,13 +99,22 @@ int main(){
     setupDB();
     string Song,Level;
     int Userdata[5], SongNum, LevelNum;
+    float Diffuculty, ppt;
 
     //UI
-    cout<<"Enter your score:"<<endl<<"(song,level,score,MaxPureCount,PureCount,FarCount,LostCount)"<<endl;
-    cin>>Song>>Level;
-    for(int i=0; i<5; i++)
-        cin>>Userdata[i];
-    for(SongNum=2; ; )
+    cout<<"Enter your score:"<<endl<<"(song,level,score,MaxPureCount,PureCount,FarCount,LostCount,)"<<endl;
+    getline(cin, Song, ',');
+    getline(cin, Level, ',');
+    for(int i=0; i<5; i++){
+        getline(cin, Stringtemp, ',');
+        Userdata[i]=stof(Stringtemp);
+    }
+    cout<<'0';
+    
+    for(SongNum=2; Song!=SongList[SongNum]; SongNum++);
+    for(LevelNum=2; Level!=LevelNames[LevelNum]; LevelNum++);
+    Diffuculty=DB[SongNum][LevelNum];
+    cout<<Diffuculty;
 
     return 0;
 }
