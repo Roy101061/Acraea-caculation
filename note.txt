@@ -1,5 +1,6 @@
 ***使行末有',' 用excel在表格右下加入空白再調整csv***
    songlist有',' 先以'-'替代
+   add search fail in DB
 
 fstream
     https://hackmd.io/@ndhu-programming-2021/BkZukG4jK

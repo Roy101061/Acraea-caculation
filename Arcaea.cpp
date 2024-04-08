@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <array>
 #define LevelCount 5+1 //+1 for blank
-#define SongCount 378+2 //+2 to sync with spreadsheet
+#define SongCount 378+2+1 //+2 to sync with spreadsheet, +1 for search fail
 
 using namespace std;
 
@@ -30,6 +30,7 @@ void setupDB(){
     int i=1;  //start from 2(1) due to spreadsheet
     while(i<SongCount){
         i++;
+        in.ignore();
         getline(in, SongList[i], ',');
         for(int n=1; n<LevelCount; n++){
             getline(in, Stringtemp, ',');
@@ -67,6 +68,7 @@ void setupDB(){
             numtemp[n]=stof(Stringtemp);
         }
         R30Rec.push_back(numtemp);
+        in.ignore();
     }
 	in.close();
 
@@ -90,6 +92,7 @@ void setupDB(){
         }
         B30Rec.push_back(numtemp);
         i++;
+        in.ignore();
     }
     in.close();
 
@@ -109,12 +112,17 @@ int main(){
         getline(cin, Stringtemp, ',');
         Userdata[i]=stof(Stringtemp);
     }
-    cout<<'0';
+    cout<<Song<<Level;
     
-    for(SongNum=2; Song!=SongList[SongNum]; SongNum++);
-    for(LevelNum=2; Level!=LevelNames[LevelNum]; LevelNum++);
+    for(SongNum=2; Song!=SongList[SongNum] && SongNum<SongCount; SongNum++)cout<<SongList[SongNum]<<endl;
+    for(LevelNum=1; Level!=LevelNames[LevelNum] && LevelNum<LevelCount; LevelNum++)cout<<LevelNames[LevelNum]<<endl;
     Diffuculty=DB[SongNum][LevelNum];
-    cout<<Diffuculty;
+    if(Diffuculty!=0){
+        cout<<Diffuculty;    
+    }
+    else{
+        cout<<"Can't found Song/Level.";
+    }
 
     return 0;
 }
