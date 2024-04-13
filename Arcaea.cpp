@@ -121,12 +121,12 @@ int main(){
             ppt=Diffuculty+2;
         }
         else if(Userdata[0]>=9800000){
-            ppt=Diffuculty+1+((Userdata[0]-9800000)/200000);
+            ppt=Diffuculty+1+((float(Userdata[0])-9800000)/200000);
         }
         else{
-            ppt=Diffuculty+((Userdata[0]-9500000)/300000);
+            ppt=Diffuculty+((float(Userdata[0])-9500000)/300000);
         }
-        cout<<ppt<<Userdata[0];    
+        cout<<ppt;
     }
     else{
         cout<<"Can't found Song/Level.";
