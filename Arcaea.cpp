@@ -112,13 +112,21 @@ int main(){
         getline(cin, Stringtemp, ',');
         Userdata[i]=stof(Stringtemp);
     }
-    cout<<Song<<Level;
     
-    for(SongNum=2; Song!=SongList[SongNum] && SongNum<SongCount; SongNum++)cout<<SongList[SongNum]<<endl;
-    for(LevelNum=1; Level!=LevelNames[LevelNum] && LevelNum<LevelCount; LevelNum++)cout<<LevelNames[LevelNum]<<endl;
+    for(SongNum=2; Song!=SongList[SongNum] && SongNum<SongCount; SongNum++);
+    for(LevelNum=1; Level!=LevelNames[LevelNum] && LevelNum<LevelCount; LevelNum++);
     Diffuculty=DB[SongNum][LevelNum];
     if(Diffuculty!=0){
-        cout<<Diffuculty;    
+        if(Userdata[0]>=10000000){
+            ppt=Diffuculty+2;
+        }
+        else if(Userdata[0]>=9800000){
+            ppt=Diffuculty+1+((Userdata[0]-9800000)/200000);
+        }
+        else{
+            ppt=Diffuculty+((Userdata[0]-9500000)/300000);
+        }
+        cout<<ppt<<Userdata[0];    
     }
     else{
         cout<<"Can't found Song/Level.";
