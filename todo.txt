@@ -1,3 +1,5 @@
+Grievous Lady,FTR,9763594,0,0,0,0,
+
 file input/output
 file type
 struct for rec?
