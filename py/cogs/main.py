@@ -4,21 +4,21 @@ from discord import app_commands
 from typing import Optional
 from discord.app_commands import Choice
 import csv
+import jellyfish
 
 LevelCount = 5
 SongCount = 378
-ppt = -1
-with open("DB.csv",encoding="utf-8") as csvfile:
+with open("lib/DB.csv",encoding="utf-8") as csvfile:
     csvread = csv.reader(csvfile)
     db = list(csvread)
 
 def calc(rating, score):
     if(score>=10000000):
-        ppt = rating+2
+        return rating+2
     elif(score>=9800000):
-        ppt = rating+1+(score-9800000)/200000
+        return rating+1+(score-9800000)/200000
     else:
-        ppt = rating+(score-9500000)/300000
+        return rating+(score-9500000)/300000
 
 class Main(commands.Cog):
     def __init__(self, bot: commands.Bot):
@@ -33,8 +33,7 @@ class Main(commands.Cog):
         ]
     )
     async def calc_by_rating(self, interaction: discord.Interaction, score: int, rating: float, r10: int):
-        calc(rating, score)
-        await interaction.response.send_message(ppt)
+        await interaction.response.send_message(calc(rating, score))
 
     @app_commands.command(name = "calc_by_song", description = "Calculate Potential by Song")
     @app_commands.describe(score = "Score", song = "Song", diff = "Difficutly", b30 = "Add to B30 record?", r10 = "Add to R10 record?", pc = "Pure Count", mpc = "Max Pure Count", fc = "Far Count", lc = "Lost Count")
@@ -55,9 +54,20 @@ class Main(commands.Cog):
             Choice(name = "NO", value = 0)
         ]
     )
+    
     async def calc_by_song(self, interaction: discord.Interaction, score: int, song: str, diff: int, b30: int, r10: int, pc: Optional[int], mpc: Optional[int], fc: Optional[int], lc: Optional[int]):
-        await interaction.response.send_message(score)
-
+        min_distance = float('inf')
+        for num in range(0, SongCount-1):
+            distance = jellyfish.levenshtein_distance(song, db[num][0])
+            if(distance < min_distance):
+                min_distance = distance
+                songnum = num
+        if(db[songnum][diff] == 0):
+            await interaction.response.send_message("No Song / Difficulty found!")
+        else:
+            await interaction.response.send_message(calc(float(db[songnum][diff]), score))
+            
+            
     
 async def setup(bot: commands.Bot):
     await bot.add_cog(Main(bot))
