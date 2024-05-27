@@ -5,10 +5,11 @@ from typing import Optional
 from discord.app_commands import Choice
 import csv
 import jellyfish
+from b30r30 import cacu
 
 LevelCount = 5
 SongCount = 378
-with open("lib/DB.csv",encoding="utf-8") as csvfile:
+with open("./data/DB.csv",encoding="utf-8") as csvfile:
     csvread = csv.reader(csvfile)
     db = list(csvread)
 
@@ -25,14 +26,9 @@ class Main(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name = "calc_by_rating", description = "Calculate Potential by Rating")
-    @app_commands.describe(score = "Score", rating = "Song Rating", r10 = "Add to R10 record?")
-    @app_commands.choices(
-        r10 =[
-            Choice(name = "YES", value = 1),
-            Choice(name = "NO", value = 0)
-        ]
-    )
-    async def calc_by_rating(self, interaction: discord.Interaction, score: int, rating: float, r10: int):
+    @app_commands.describe(score = "Score", rating = "Song Rating")
+    
+    async def calc_by_rating(self, interaction: discord.Interaction, score: int, rating: float):
         await interaction.response.send_message(calc(rating, score))
 
     @app_commands.command(name = "calc_by_song", description = "Calculate Potential by Song")
@@ -55,7 +51,8 @@ class Main(commands.Cog):
         ]
     )
     
-    async def calc_by_song(self, interaction: discord.Interaction, score: int, song: str, diff: int, b30: int, r10: int, pc: Optional[int], mpc: Optional[int], fc: Optional[int], lc: Optional[int]):
+    async def calc_by_song(self, interaction: discord.Interaction, score: int, song: str, diff: int, b30: int, r10: int, pc: int, mpc: int, fc: int, lc: int):
+        user_id = interaction.user.id
         min_distance = float('inf')
         for num in range(0, SongCount-1):
             distance = jellyfish.levenshtein_distance(song, db[num][0])
@@ -65,6 +62,7 @@ class Main(commands.Cog):
         if(db[songnum][diff] == 0):
             await interaction.response.send_message("No Song / Difficulty found!")
         else:
+            cacu(score, db[songnum][0], diff, b30, r10, pc, mpc, fc, lc, user_id)
             await interaction.response.send_message(calc(float(db[songnum][diff]), score))
             
             
