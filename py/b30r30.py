@@ -1,7 +1,7 @@
 import os
 import sqlite3
 
-def cacu(score, song, diff, b30, r10, pc, mpc, fc, lc, id):
+def rec(score, song, diff, b30, r10, pc, mpc, fc, lc, id):
     FILE_PATH = './data/userdata/{id}.db'
     conn = sqlite3.connect('{FILE_PATH}')
     cur = conn.cursor()

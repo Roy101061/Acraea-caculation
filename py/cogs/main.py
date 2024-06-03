@@ -5,7 +5,7 @@ from typing import Optional
 from discord.app_commands import Choice
 import csv
 import jellyfish
-from b30r30 import cacu
+from b30r30 import rec
 
 LevelCount = 5
 SongCount = 378
@@ -20,6 +20,38 @@ def calc(rating, score):
         return rating+1+(score-9800000)/200000
     else:
         return rating+(score-9500000)/300000
+
+class MyView(discord.ui.View):
+    def __init__(self, score, song, diff, pc, mpc, fc, lc):
+        super().__init__()
+        self.score = score
+        self.song = song
+        self.diff = diff
+        self.pc = pc
+        self.mpc = mpc
+        self.fc = fc
+        self.lc = lc
+    
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.grey, custom_id="Cancel")
+    async def Cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("Canceled!", ephemeral=True)
+        await interaction.message.edit(view=None)
+        rec(self.score, self.song, self.diff, 0, 0, self.pc, self.mpc, self.fc, self.lc)
+        
+    @discord.ui.button(label="Add B30", style=discord.ButtonStyle.green, custom_id="B30")
+    async def B30(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("B30 record added!", ephemeral=True)
+        await interaction.message.edit(view=None)
+        
+    @discord.ui.button(label="Add R10", style=discord.ButtonStyle.green, custom_id="R10")
+    async def R10(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("R10 record added!", ephemeral=True)
+        await interaction.message.edit(view=None)
+        
+    @discord.ui.button(label="Add B30 and R10", style=discord.ButtonStyle.blurple, custom_id="Both")
+    async def Both(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("B30 and R10 record added!", ephemeral=True)
+        await interaction.message.edit(view=None)
 
 class Main(commands.Cog):
     def __init__(self, bot: commands.Bot):
@@ -54,17 +86,13 @@ class Main(commands.Cog):
         if(db[songnum][diff] == 0):
             await interaction.response.send_message("No Song / Difficulty found!")
         else:
-            #cacu(score, db[songnum][0], diff, pc, mpc, fc, lc, user_id)
             embed=discord.Embed(title="Search result", color=0x124cfd)
             embed.add_field(name="Song", value=db[songnum][0], inline=True)
             embed.add_field(name="Difficulty", value=db[0][diff], inline=True)
             embed.add_field(name="Level Potential", value=db[songnum][diff], inline=True)
             embed.add_field(name="Result", value=calc(float(db[songnum][diff]), score), inline=True)
             
-            
-            view = discord.ui.View()
-            view.add_item()
-            view.add_item()
+            view = MyView(score, db[songnum][0], db[0][diff], pc, mpc, fc, lc)
             
             await interaction.response.send_message(embed=embed, view=view)
             
